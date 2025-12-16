@@ -30,7 +30,12 @@ echo "------------------------------------------"
 python generate_prompts.py 3
 echo ""
 
+echo "Generating PDFs for all runs..."
+echo "------------------------------------------"
+python generate_pdfs.py
+echo ""
+
 echo "=========================================="
 echo "All runs complete!"
-echo "Check the outputs/ directory for results"
+echo "Check the runs/ directory for results"
 echo "=========================================="

@@ -22,7 +22,7 @@ OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1/chat/completions"
 
 # Output directory
-OUTPUT_DIR = Path("outputs")
+OUTPUT_DIR = Path("runs")
 OUTPUT_DIR.mkdir(exist_ok=True)
 
 # JSON Schema for structured output

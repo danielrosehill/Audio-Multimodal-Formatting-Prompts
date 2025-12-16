@@ -68,17 +68,35 @@ python generate_prompts.py 2 --delay 2.0
 
 ## Output Structure
 
-All outputs are saved to the `outputs/` directory with structured format:
+All outputs are saved to the `runs/` directory with structured format:
 
 **Per Run:**
 - `{run_name}_{timestamp}.json` - Master JSON with all prompts and metadata
+- `{run_name}_{timestamp}.pdf` - Beautifully formatted PDF with one prompt per page
 - `{run_name}_{timestamp}_all.md` - Consolidated markdown with all prompts
-- `{run_name}_{timestamp}_prompts/` - Directory with individual prompt files
+- `{run_name}_{timestamp}_prompts/` - Directory with individual prompt markdown files
 
 **Each Prompt Contains:**
 - `name`: Short descriptive name (e.g., "Meeting Minutes - Action Items")
 - `description`: What the transformation does and when to use it
 - `prompt`: Complete system prompt ready for audio multimodal models
+
+**Individual Files:**
+Each prompt is saved as `{number}_{normalized-name}.md` for easy browsing and reference.
+
+### Generating PDFs
+
+After running the generators, create PDFs with:
+
+```bash
+source .venv/bin/activate
+python generate_pdfs.py
+```
+
+This creates a formatted PDF for each run with:
+- Cover page with run metadata
+- One prompt per page with title, description, and full prompt
+- Professional formatting for easy reading and printing
 
 ## System Prompts
 
