@@ -142,10 +142,23 @@ Generate your prompts now in this JSON format."""
 
 
 def save_prompts(prompts_data: dict, run_name: str, model: str, prompt_file: int, elapsed: float):
-    """Save prompts to both JSON and individual markdown files."""
+    """Save prompts to structured outputs."""
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
-    # Save master JSON file
+    # Determine run number from run_name
+    run_num = run_name.split('_')[0].replace('run', '')
+
+    # Create output directories
+    outputs_base = Path("outputs")
+    run_dir = outputs_base / f"run{run_num}"
+    markdown_dir = run_dir / "markdown"
+    pdf_dir = run_dir / "pdf"
+
+    run_dir.mkdir(parents=True, exist_ok=True)
+    markdown_dir.mkdir(exist_ok=True)
+    pdf_dir.mkdir(exist_ok=True)
+
+    # Save master JSON file to runs/ directory
     master_json = OUTPUT_DIR / f"{run_name}_{timestamp}.json"
     output_data = {
         "run_name": run_name,
@@ -163,8 +176,8 @@ def save_prompts(prompts_data: dict, run_name: str, model: str, prompt_file: int
 
     print(f"✓ Master JSON saved to: {master_json}")
 
-    # Create run-specific directory for individual prompt files
-    prompts_dir = OUTPUT_DIR / f"{run_name}_{timestamp}_prompts"
+    # Create directory for individual prompt files in outputs/runX/markdown/prompts/
+    prompts_dir = markdown_dir / "prompts"
     prompts_dir.mkdir(exist_ok=True)
 
     # Save each prompt as individual markdown file
@@ -183,8 +196,8 @@ def save_prompts(prompts_data: dict, run_name: str, model: str, prompt_file: int
 
     print(f"✓ Individual prompts saved to: {prompts_dir}/ ({len(prompts_data.get('prompts', []))} files)")
 
-    # Also create a consolidated markdown file
-    consolidated_md = OUTPUT_DIR / f"{run_name}_{timestamp}_all.md"
+    # Create consolidated markdown file in outputs/runX/markdown/
+    consolidated_md = markdown_dir / f"{run_name}_{timestamp}_all.md"
     with open(consolidated_md, 'w') as f:
         f.write(f"# {run_name}\n\n")
         f.write(f"**Generated:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")

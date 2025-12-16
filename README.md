@@ -68,21 +68,38 @@ python generate_prompts.py 2 --delay 2.0
 
 ## Output Structure
 
-All outputs are saved to the `runs/` directory with structured format:
+Outputs are organized into two directories:
 
-**Per Run:**
-- `{run_name}_{timestamp}.json` - Master JSON with all prompts and metadata
-- `{run_name}_{timestamp}.pdf` - Beautifully formatted PDF with one prompt per page
-- `{run_name}_{timestamp}_all.md` - Consolidated markdown with all prompts
-- `{run_name}_{timestamp}_prompts/` - Directory with individual prompt markdown files
+### `runs/` - Programmatic Data
+Contains JSON files with structured data for programmatic access:
+- `run1_batch_10_{timestamp}.json`
+- `run2_individual_50_{timestamp}.json`
+- `run3_batch_50_{timestamp}.json`
+
+### `outputs/` - Human-Readable Data
+Organized by run with markdown and PDF formats:
+
+```
+outputs/
+├── run1/
+│   ├── markdown/
+│   │   ├── {run_name}_{timestamp}_all.md  (consolidated)
+│   │   └── prompts/                         (individual files)
+│   │       ├── 001_prompt-name.md
+│   │       ├── 002_prompt-name.md
+│   │       └── ...
+│   └── pdf/
+│       └── {run_name}_{timestamp}.pdf
+├── run2/
+│   └── ...
+└── run3/
+    └── ...
+```
 
 **Each Prompt Contains:**
 - `name`: Short descriptive name (e.g., "Meeting Minutes - Action Items")
 - `description`: What the transformation does and when to use it
 - `prompt`: Complete system prompt ready for audio multimodal models
-
-**Individual Files:**
-Each prompt is saved as `{number}_{normalized-name}.md` for easy browsing and reference.
 
 ### Generating PDFs
 

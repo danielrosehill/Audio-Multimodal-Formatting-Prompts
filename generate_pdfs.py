@@ -23,8 +23,14 @@ def create_pdf_for_run(json_file: Path):
     with open(json_file, 'r') as f:
         data = json.load(f)
 
-    # Create PDF filename
-    pdf_filename = json_file.parent / f"{json_file.stem}.pdf"
+    # Determine run number from filename
+    run_name = data.get('run_name', json_file.stem)
+    run_num = run_name.split('_')[0].replace('run', '')
+
+    # Create PDF in outputs/runX/pdf/
+    pdf_dir = Path("outputs") / f"run{run_num}" / "pdf"
+    pdf_dir.mkdir(parents=True, exist_ok=True)
+    pdf_filename = pdf_dir / f"{json_file.stem}.pdf"
 
     # Create PDF document
     doc = SimpleDocTemplate(
