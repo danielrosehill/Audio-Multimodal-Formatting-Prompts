@@ -115,6 +115,24 @@ This creates a formatted PDF for each run with:
 - One prompt per page with title, description, and full prompt
 - Professional formatting for easy reading and printing
 
+### Consolidating All Runs
+
+To create a single consolidated view of all prompts across all three runs:
+
+```bash
+source .venv/bin/activate
+python consolidate_runs.py
+```
+
+This creates:
+- `outputs/consolidated/markdown/all_prompts_{timestamp}.md` - All 118 prompts organized by run
+- `outputs/consolidated/pdf/all_prompts_{timestamp}.pdf` - Single PDF with all prompts and run indicators in footers
+
+The consolidated output includes:
+- Run descriptions explaining each generation strategy
+- All prompts organized by run number
+- Footer on each prompt page indicating which run it came from
+
 ## System Prompts
 
 - `system-prompts/1.md`: Batch generator (10 prompts)
